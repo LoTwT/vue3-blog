@@ -7,49 +7,65 @@
         data-test="period"
         v-for="(period, index) in periods"
         :key="index"
-      >{{ period }}</a>
+        >{{ period }}</a
+      >
     </p>
 
-    <a data-test="dataPost" v-for="showPost in showPosts" :key="showPost.id" class="panel-block">
-      <div>
-        <a>{{ showPost.title }}</a>
-        <div>{{ showPost.created.format("yyyy-MM-DD") }}</div>
-      </div>
-    </a>
+    <TimelinePost
+      v-for="showPost in showPosts"
+      :key="showPost.id"
+      :showPost="showPost"
+    />
   </nav>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
 import { Period, MockPost } from "@/types/index";
-import { todayPost, thisWeekPost, thisMonthPost } from "@/mock"
-import moment from "moment"
+import { todayPost, thisWeekPost, thisMonthPost } from "@/mock";
+import moment from "moment";
+import TimelinePost from "./TimelinePost.vue";
 
 export default defineComponent({
   name: "Timeline",
+  components: { TimelinePost },
   setup() {
     const periods: Period[] = ["今天", "本周", "本月"];
-    const selectedPeriod = ref<Period>("今天")
+    const selectedPeriod = ref<Period>("今天");
 
     // tabs 切换
     const changePeriod = (period: Period) => {
-      selectedPeriod.value = period
-    }
+      selectedPeriod.value = period;
+    };
 
-    const postData: MockPost[] = [todayPost, thisWeekPost, thisMonthPost]
+    const postData: MockPost[] = [todayPost, thisWeekPost, thisMonthPost];
 
-    const showPosts = computed(() => postData.filter((post) => {
-      if (selectedPeriod.value === "今天" && post.created.isAfter(moment().subtract(1, "day"))) return true
-      if (selectedPeriod.value === "本周" && post.created.isAfter(moment().subtract(1, "week"))) return true
-      if (selectedPeriod.value === "本月" && post.created.isAfter(moment().subtract(1, "month"))) return true
-      return false
-    }))
+    const showPosts = computed(() =>
+      postData.filter((post) => {
+        if (
+          selectedPeriod.value === "今天" &&
+          post.created.isAfter(moment().subtract(1, "day"))
+        )
+          return true;
+        if (
+          selectedPeriod.value === "本周" &&
+          post.created.isAfter(moment().subtract(1, "week"))
+        )
+          return true;
+        if (
+          selectedPeriod.value === "本月" &&
+          post.created.isAfter(moment().subtract(1, "month"))
+        )
+          return true;
+        return false;
+      })
+    );
 
     return {
       periods,
       selectedPeriod,
       changePeriod,
-      showPosts
+      showPosts,
     };
   },
 });

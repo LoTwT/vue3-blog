@@ -26,10 +26,12 @@ import { todayPost, thisWeekPost, thisMonthPost } from "@/mock";
 import moment from "moment";
 import TimelinePost from "./TimelinePost.vue";
 
+const delayLoad = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
 export default defineComponent({
   name: "Timeline",
   components: { TimelinePost },
-  setup() {
+  async setup() {
     const periods: Period[] = ["今天", "本周", "本月"];
     const selectedPeriod = ref<Period>("今天");
 
@@ -39,6 +41,8 @@ export default defineComponent({
     };
 
     const postData: MockPost[] = [todayPost, thisWeekPost, thisMonthPost];
+
+    await delayLoad(2000);
 
     const showPosts = computed(() =>
       postData.filter((post) => {

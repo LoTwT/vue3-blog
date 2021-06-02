@@ -17,12 +17,14 @@ export const todayPost: MockPost = {
 
 export const thisWeekPost: MockPost = {
   ...basePost,
+  id: 2,
   title: "本周",
   created: moment().subtract(2, "day")
 }
 
 export const thisMonthPost: MockPost = {
   ...basePost,
+  id: 3,
   title: "本月",
   created: moment().subtract(2, "weeks")
 }

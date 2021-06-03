@@ -42,9 +42,14 @@ export default defineComponent({
     };
 
     const store = useStore();
-    console.log(store.getState());
+    const postData = store
+      .getState()
+      .posts.ids.reduce<MockPost[]>((arr: MockPost[], id: string) => {
+        const post = store.getState().posts.all[id];
+        return arr.concat(post);
+      }, []);
 
-    const postData: MockPost[] = [todayPost, thisWeekPost, thisMonthPost];
+    // const postData: MockPost[] = [todayPost, thisWeekPost, thisMonthPost];
 
     await delayLoad(2000);
 

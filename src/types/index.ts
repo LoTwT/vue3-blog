@@ -2,7 +2,7 @@ import { Moment } from "moment";
 
 export type Period = "今天" | "本周" | "本月"
 
-export interface MockPost {
+export interface Post {
   id: number,
   title: string,
   markdown: string,

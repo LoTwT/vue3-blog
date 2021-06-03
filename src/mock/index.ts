@@ -1,7 +1,7 @@
 import moment from "moment"
-import { MockPost } from "@/types/index"
+import { Post } from "@/types/index"
 
-export const basePost: MockPost = {
+export const basePost: Post = {
   id: 1,
   title: "blog",
   markdown: "article",
@@ -10,19 +10,19 @@ export const basePost: MockPost = {
   created: moment()
 }
 
-export const todayPost: MockPost = {
+export const todayPost: Post = {
   ...basePost,
   title: "今天"
 }
 
-export const thisWeekPost: MockPost = {
+export const thisWeekPost: Post = {
   ...basePost,
   id: 2,
   title: "本周",
   created: moment().subtract(2, "day")
 }
 
-export const thisMonthPost: MockPost = {
+export const thisMonthPost: Post = {
   ...basePost,
   id: 3,
   title: "本月",

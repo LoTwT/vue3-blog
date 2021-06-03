@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
-import { Period, MockPost } from "@/types/index";
+import { Period, Post } from "@/types/index";
 // import { todayPost, thisWeekPost, thisMonthPost } from "@/mock";
 import moment from "moment";
 import TimelinePost from "./TimelinePost.vue";
@@ -49,12 +49,12 @@ export default defineComponent({
 
     const postData = store
       .getState()
-      .posts.ids.reduce<MockPost[]>((arr: MockPost[], id: string) => {
+      .posts.ids.reduce<Post[]>((arr: Post[], id: string) => {
         const post = store.getState().posts.all[id];
         return arr.concat(post);
       }, []);
 
-    // const postData: MockPost[] = [todayPost, thisWeekPost, thisMonthPost];
+    // const postData: Post[] = [todayPost, thisWeekPost, thisMonthPost];
 
     // await delayLoad(2000);
 

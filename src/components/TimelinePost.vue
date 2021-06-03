@@ -9,13 +9,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { MockPost } from "@/types";
+import { Post } from "@/types";
 
 export default defineComponent({
   name: "TimelinePost",
   props: {
     showPost: {
-      type: Object as () => MockPost,
+      type: Object as () => Post,
       required: true,
     },
   },

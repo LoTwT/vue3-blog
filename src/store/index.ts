@@ -1,6 +1,7 @@
 import { reactive } from "vue"
-import { todayPost, thisWeekPost, thisMonthPost } from "@/mock"
+// import { todayPost, thisWeekPost, thisMonthPost } from "@/mock"
 import { MockPost } from "@/types"
+import axios from "axios"
 
 interface PostState {
   ids: string[],
@@ -14,14 +15,14 @@ interface State {
 
 const initPostState = (): PostState => ({
   ids: [
-    todayPost.id.toString(),
-    thisWeekPost.id.toString(),
-    thisMonthPost.id.toString(),
+    // todayPost.id.toString(),
+    // thisWeekPost.id.toString(),
+    // thisMonthPost.id.toString(),
   ],
   all: {
-    [todayPost.id]: todayPost,
-    [thisWeekPost.id]: thisWeekPost,
-    [thisMonthPost.id]: thisMonthPost,
+    // [todayPost.id]: todayPost,
+    // [thisWeekPost.id]: thisWeekPost,
+    // [thisMonthPost.id]: thisMonthPost,
   },
   isLoaded: false
 })
@@ -37,6 +38,23 @@ class Store {
 
   public getState(): State {
     return this.state
+  }
+
+  async fetchPosts() {
+    const res = await axios.get<MockPost[]>("/mockposts")
+    const ids: string[] = []
+    const all: Record<string, MockPost> = {}
+
+    for (const mockPost of res.data) {
+      ids.push(mockPost.id.toString())
+      all[mockPost.id] = mockPost
+    }
+
+    this.state.posts = {
+      ids,
+      all,
+      isLoaded: true
+    }
   }
 }
 

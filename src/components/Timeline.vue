@@ -22,7 +22,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
 import { Period, MockPost } from "@/types/index";
-import { todayPost, thisWeekPost, thisMonthPost } from "@/mock";
+// import { todayPost, thisWeekPost, thisMonthPost } from "@/mock";
 import moment from "moment";
 import TimelinePost from "./TimelinePost.vue";
 import { useStore } from "@/store/index";
@@ -42,6 +42,11 @@ export default defineComponent({
     };
 
     const store = useStore();
+
+    if (!store.getState().posts.isLoaded) {
+      await store.fetchPosts();
+    }
+
     const postData = store
       .getState()
       .posts.ids.reduce<MockPost[]>((arr: MockPost[], id: string) => {

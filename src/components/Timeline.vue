@@ -27,7 +27,7 @@ import moment from "moment";
 import TimelinePost from "./TimelinePost.vue";
 import { useStore } from "@/store/index";
 
-const delayLoad = (ms: number) => new Promise((res) => setTimeout(res, ms));
+// const delayLoad = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export default defineComponent({
   name: "Timeline",
@@ -56,7 +56,7 @@ export default defineComponent({
 
     // const postData: MockPost[] = [todayPost, thisWeekPost, thisMonthPost];
 
-    await delayLoad(2000);
+    // await delayLoad(2000);
 
     const showPosts = computed(() =>
       postData.filter((post) => {

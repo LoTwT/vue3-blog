@@ -25,6 +25,7 @@ import { Period, MockPost } from "@/types/index";
 import { todayPost, thisWeekPost, thisMonthPost } from "@/mock";
 import moment from "moment";
 import TimelinePost from "./TimelinePost.vue";
+import { useStore } from "@/store/index";
 
 const delayLoad = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
@@ -39,6 +40,9 @@ export default defineComponent({
     const changePeriod = (period: Period) => {
       selectedPeriod.value = period;
     };
+
+    const store = useStore();
+    console.log(store.getState());
 
     const postData: MockPost[] = [todayPost, thisWeekPost, thisMonthPost];
 

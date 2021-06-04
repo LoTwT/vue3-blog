@@ -41,20 +41,22 @@ class Store {
   }
 
   async fetchPosts() {
-    const res = await axios.get<Post[]>("/Posts")
-    const ids: string[] = []
-    const all: Record<string, Post> = {}
+    const res = await axios.get<Post[]>("/mockposts")
 
-    for (const Post of res.data) {
-      ids.push(Post.id.toString())
-      all[Post.id] = Post
+    for (const post of res.data) {
+      if (!this.state.posts.ids.includes(post.id.toString())) {
+        this.state.posts.ids.push(post.id.toString())
+      }
+      this.state.posts.all[post.id] = post
     }
 
-    this.state.posts = {
-      ids,
-      all,
-      isLoaded: true
-    }
+    this.state.posts.isLoaded = true
+  }
+
+  async createPost(post: Post) {
+    const res = await axios.post<Post>("/mockposts", post)
+    this.state.posts.all[res.data.id] = res.data
+    this.state.posts.ids.push(res.data.id.toString())
   }
 }
 

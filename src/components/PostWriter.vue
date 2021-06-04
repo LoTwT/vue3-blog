@@ -25,6 +25,15 @@
         <div v-html="html" />
       </div>
     </div>
+
+    <!-- 保存 -->
+    <div class="columns">
+      <div class="column">
+        <button class="button is-primary is-pull-right" @click="handleSave">
+          保存
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -43,7 +52,7 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  setup(props, ctx) {
     const post = toRefs(reactive(props.post));
     const contentEditable = ref<HTMLDivElement | null>(null);
 
@@ -66,6 +75,19 @@ export default defineComponent({
       contentEditable.value &&
       (post.markdown.value = contentEditable.value.innerText);
 
+    // 保存
+    const handleSave = () => {
+      // 将数据提交到父级
+      const newpost: Post = {
+        ...props.post,
+        title: post.title.value,
+        markdown: post.markdown.value,
+        html: post.markdown.value,
+      }
+
+      ctx.emit("updatePost", newpost)
+    }
+
     return {
       title: post.title,
       contentEditable,
@@ -74,6 +96,8 @@ export default defineComponent({
       markdown: post.markdown,
 
       html: post.html,
+
+      handleSave
     };
   },
 });

@@ -31,8 +31,9 @@
 <script lang="ts">
 import { Post } from "@/types";
 import { defineComponent, onMounted, reactive, ref, toRefs, watch } from "vue";
-// @ts-ignore
-import { parse } from "marked";
+import { MarkedOptions, parse } from "marked";
+import HLJS from "highlight.js";
+import debounce from "lodash/debounce";
 
 export default defineComponent({
   name: "PostWriter",
@@ -46,13 +47,14 @@ export default defineComponent({
     const post = toRefs(reactive(props.post));
     const contentEditable = ref<HTMLDivElement | null>(null);
 
-    watch(
-      post.markdown,
-      (newValue) => {
-        post.html.value = parse(newValue);
-      },
-      { immediate: true }
-    );
+    const markedOptions: MarkedOptions = {
+      highlight: (code: string) => HLJS.highlightAuto(code).value,
+    };
+
+    const update = (newValue: string) =>
+      (post.html.value = parse(newValue, markedOptions));
+
+    watch(post.markdown, debounce(update, 500), { immediate: true });
 
     onMounted(
       () =>

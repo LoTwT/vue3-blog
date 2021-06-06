@@ -4,11 +4,12 @@
     <div class="control">
       <input class="input" :type="type" :id="name" @input="handleInput" :value="modelValue" />
     </div>
-    <p class="help is-danger" v-if="!error">{{ error }}</p>
+    <p class="help is-danger" v-show="!error?.valid">{{ error?.errorMessage }}</p>
   </div>
 </template>
 
 <script lang="ts">
+import { Status } from "@/utils/validators"
 import { defineComponent } from "vue"
 
 export default defineComponent({
@@ -27,7 +28,7 @@ export default defineComponent({
       required: true
     },
     error: {
-      type: String
+      type: Object as () => Status
     }
   },
   setup(props, ctx) {

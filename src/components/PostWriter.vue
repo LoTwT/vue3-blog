@@ -5,7 +5,12 @@
         <div class="fields">
           <div class="label">博客标题</div>
           <div class="control">
-            <input type="text" v-model="title" class="input" />
+            <input
+              data-test="post-title"
+              type="text"
+              v-model="title"
+              class="input"
+            />
           </div>
         </div>
       </div>
@@ -19,6 +24,7 @@
           id="markdown"
           ref="contentEditable"
           @input="handleEdit"
+          data-test="markdown"
         />
       </div>
       <div class="column is-one-half">
@@ -29,7 +35,11 @@
     <!-- 保存 -->
     <div class="columns">
       <div class="column">
-        <button class="button is-primary is-pull-right" @click="handleSave">
+        <button
+          class="button is-primary is-pull-right"
+          @click="handleSave"
+          data-test="save-post"
+        >
           保存
         </button>
       </div>
@@ -83,10 +93,10 @@ export default defineComponent({
         title: post.title.value,
         markdown: post.markdown.value,
         html: post.markdown.value,
-      }
+      };
 
-      ctx.emit("updatePost", newpost)
-    }
+      ctx.emit("updatePost", newpost);
+    };
 
     return {
       title: post.title,
@@ -97,7 +107,7 @@ export default defineComponent({
 
       html: post.html,
 
-      handleSave
+      handleSave,
     };
   },
 });

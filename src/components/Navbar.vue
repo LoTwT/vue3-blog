@@ -13,9 +13,28 @@
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
-            <div class="field is-grouped">
+            <div class="field is-grouped" v-if="auth">
               <div class="control">
-                <button type="button" class="button is-small" @click="modal.showModal">
+                <button type="button" class="button is-small">
+                  <span class="icon">
+                    <i class="fa fa-user-plus"></i>
+                  </span>
+                  <span>Admin</span>
+                </button>
+              </div>
+
+              <div class="control">
+                <button type="button" class="button is-small is-info is-outlined" @click="logout">
+                  <span class="icon">
+                    <i class="fa fa-user"></i>
+                  </span>
+                  <span>退出</span>
+                </button>
+              </div>
+            </div>
+            <div class="field is-grouped" v-else>
+              <div class="control">
+                <button type="button" class="button is-small" @click="register">
                   <span class="icon">
                     <i class="fa fa-user-plus"></i>
                   </span>
@@ -24,7 +43,7 @@
               </div>
 
               <div class="control">
-                <button type="button" class="button is-small is-info is-outlined">
+                <button type="button" class="button is-small is-info is-outlined" @click="login">
                   <span class="icon">
                     <i class="fa fa-user"></i>
                   </span>
@@ -39,22 +58,48 @@
 
     <teleport to="#modal" v-if="modal.visible">
       <!-- 插入组件 / 动态组件 -->
-      <Register />
+      <component :is="component" />
     </teleport>
   </nav>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent, shallowRef } from "vue";
 import { useModal } from "@/utils/useModal"
 import Register from "@/views/Register.vue"
+import Login from "@/views/Login.vue"
+import { useStore } from "@/store";
 
 export default defineComponent({
   name: "Navbar",
-  components: { Register },
+  components: {},
   setup() {
+    const component = shallowRef()
+    const modal = useModal()
+    const store = useStore()
+
+    const auth = computed(() => store.getState().loginUsers.currentUserId)
+
+    const register = () => {
+      component.value = Register
+      modal.showModal()
+    }
+    const login = () => {
+      component.value = Login
+      modal.showModal()
+    }
+
+    const logout = async () => {
+      await store.logout()
+    }
+
     return {
-      modal: useModal()
+      modal,
+      component,
+      auth,
+      register,
+      login,
+      logout,
     }
   },
 });

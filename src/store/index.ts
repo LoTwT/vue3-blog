@@ -79,6 +79,10 @@ class Store {
     this.state.loginUsers.ids.push(res.data.id.toString())
     this.state.loginUsers.currentUserId = res.data.id.toString()
   }
+
+  async logout(): Promise<void> {
+    this.state.loginUsers.currentUserId = undefined
+  }
 }
 
 const store = new Store(initState())

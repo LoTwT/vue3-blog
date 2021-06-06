@@ -21,4 +21,10 @@ axios.post = async (url: string, payload: Post): Promise<any> => {
   return Promise.resolve({ data: url === "/mockposts" ? { ...payload, id } : {} })
 }
 
+axios.put = async (url: string, payload: Post): Promise<any> => {
+  await promiseTimeout(1000)
+  return Promise.resolve({ data: url === "/mockposts" ? { ...payload } : {} })
+}
+
+
 createApp(App).use(router).mount('#app')

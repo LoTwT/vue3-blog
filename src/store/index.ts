@@ -58,6 +58,11 @@ class Store {
     this.state.posts.all[res.data.id] = res.data
     this.state.posts.ids.push(res.data.id.toString())
   }
+
+  async updatePost(post: Post) {
+    const res = await axios.put<Post>("/mockposts", post)
+    this.state.posts.all[res.data.id] = res.data
+  }
 }
 
 const store = new Store(initState())

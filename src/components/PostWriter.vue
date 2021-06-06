@@ -5,12 +5,7 @@
         <div class="fields">
           <div class="label">博客标题</div>
           <div class="control">
-            <input
-              data-test="post-title"
-              type="text"
-              v-model="title"
-              class="input"
-            />
+            <input data-test="post-title" type="text" v-model="title" class="input" />
           </div>
         </div>
       </div>
@@ -19,29 +14,26 @@
     <!-- 写的内容 & 展示内容 -->
     <div class="columns">
       <div class="column is-one-half">
+        <div>编辑</div>
         <div
           contenteditable
           id="markdown"
           ref="contentEditable"
           @input="handleEdit"
           data-test="markdown"
+          class="area-box"
         />
       </div>
       <div class="column is-one-half">
-        <div v-html="html" />
+        <div>预览</div>
+        <div v-html="html" class="area-box" />
       </div>
     </div>
 
     <!-- 保存 -->
     <div class="columns">
       <div class="column">
-        <button
-          class="button is-primary is-pull-right"
-          @click="handleSave"
-          data-test="save-post"
-        >
-          保存
-        </button>
+        <button class="button is-primary is-pull-right" @click="handleSave" data-test="save-post">保存</button>
       </div>
     </div>
   </div>
@@ -112,3 +104,10 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.area-box {
+  border: 1px solid #000;
+  padding: 10px;
+}
+</style>

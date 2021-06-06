@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar is-dark">
+  <nav class="navbar is-white">
     <div class="container">
       <div class="navbar-menu">
         <div class="navbar-start">

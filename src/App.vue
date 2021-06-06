@@ -1,7 +1,7 @@
 <template>
+  <Navbar />
   <section class="section">
     <div class="container">
-      <Navbar />
       <router-view />
     </div>
   </section>

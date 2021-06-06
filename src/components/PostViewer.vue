@@ -1,4 +1,8 @@
 <template>
+  <router-link :to="gotoEdit" class="button is-rounded is-link">
+    编辑&nbsp;
+    <i class="fa fa-edit"></i>
+  </router-link>
   <div>博客标题: {{ post?.title }}</div>
   <div v-html="post?.html"></div>
   <div>markdown: {{ post?.markdown }}</div>
@@ -24,6 +28,7 @@ export default defineComponent({
 
     return {
       post,
+      gotoEdit: `/posts/${post.id}/edit`
     };
   },
 });

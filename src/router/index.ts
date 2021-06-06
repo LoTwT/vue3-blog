@@ -6,6 +6,7 @@ export default createRouter({
   routes: [
     { path: "/", component: Home, name: "Home" },
     { path: "/posts/new", component: () => import("@/views/NewPost.vue"), name: "NewPost" },
-    { path: "/posts/:id", component: () => import("@/views/ShowPost.vue"), name: "ShowPost" }
+    { path: "/posts/:id", component: () => import("@/views/ShowPost.vue"), name: "ShowPost" },
+    { path: "/posts/:id/edit", component: () => import("@/views/EditPost.vue"), name: "EditPost" }
   ]
 })

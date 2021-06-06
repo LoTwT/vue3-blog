@@ -1,22 +1,26 @@
 <template>
-  <nav class="is-primary panel">
-    <p class="panel-tabs">
-      <a
-        @click="changePeriod(period)"
-        :class="[selectedPeriod === period ? 'is-active' : '']"
-        data-test="period"
-        v-for="(period, index) in periods"
-        :key="index"
-        >{{ period }}</a
-      >
-    </p>
-
-    <TimelinePost
-      v-for="showPost in showPosts"
-      :key="showPost.id"
-      :showPost="showPost"
-    />
+  <nav class="navbar is-dark">
+    <div class="container">
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <a
+            class="navbar-item"
+            @click="changePeriod(period)"
+            :class="[selectedPeriod === period ? 'is-active' : '']"
+            data-test="period"
+            v-for="(period, index) in periods"
+            :key="index"
+          >{{ period }}</a>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <router-link class="button is-primary is-alt" to="/posts/new">添加博客</router-link>
+          </div>
+        </div>
+      </div>
+    </div>
   </nav>
+  <TimelinePost v-for="showPost in showPosts" :key="showPost.id" :showPost="showPost" />
 </template>
 
 <script lang="ts">

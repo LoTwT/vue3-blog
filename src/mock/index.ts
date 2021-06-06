@@ -1,6 +1,8 @@
 import moment from "moment"
 import { Post } from "@/types/index"
 
+moment.locale("zh-cn")
+
 export const basePost: Post = {
   id: 1,
   title: "blog",

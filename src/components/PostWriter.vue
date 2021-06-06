@@ -33,7 +33,12 @@
     <!-- 保存 -->
     <div class="columns">
       <div class="column">
-        <button class="button is-primary is-pull-right" @click="handleSave" data-test="save-post">保存</button>
+        <button
+          class="button is-primary is-pulled-right"
+          @click="handleSave"
+          data-test="save-post"
+        >保存</button>
+        <button class="button is-danger" @click="$router.go(-1)">取消</button>
       </div>
     </div>
   </div>
@@ -84,7 +89,7 @@ export default defineComponent({
         ...props.post,
         title: post.title.value,
         markdown: post.markdown.value,
-        html: post.markdown.value,
+        html: parse(post.markdown.value, markedOptions),
       };
 
       ctx.emit("updatePost", newpost);

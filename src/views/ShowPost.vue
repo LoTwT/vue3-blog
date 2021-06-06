@@ -1,7 +1,7 @@
 <template>
   <Suspense>
     <template #default>
-      <Timeline />
+      <PostViewer />
     </template>
     <template #fallback>
       <Progress />
@@ -11,13 +11,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Timeline from "@/components/Timeline.vue";
+import PostViewer from "@/components/PostViewer.vue";
 import Progress from "@/components/Progress.vue";
 
 export default defineComponent({
-  name: "Home",
+  name: "ShowPost",
   components: {
-    Timeline,
+    PostViewer,
     Progress,
   },
 });

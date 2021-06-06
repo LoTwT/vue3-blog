@@ -1,10 +1,10 @@
 <template>
-  <a data-test="dataPost" class="panel-block">
+  <router-link :to="gotoDetail" data-test="dataPost" class="panel-block">
     <div>
       <a>{{ showPost.title }}</a>
       <div>{{ showPost.created.format("yyyy-MM-DD") }}</div>
     </div>
-  </a>
+  </router-link>
 </template>
 
 <script lang="ts">
@@ -19,6 +19,10 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {},
+  setup(props) {
+    return {
+      gotoDetail: `/posts/${props.showPost.id}`,
+    };
+  },
 });
 </script>

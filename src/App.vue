@@ -7,6 +7,8 @@
     <button class="modal-close is-large" type="button" @click="modal.hideModel"></button>
   </div>
 
+  <FormInput type="text" name="用户名" v-model="username" error="请填写用户名" />
+
   <Navbar />
   <section class="section">
     <div class="container">
@@ -16,15 +18,18 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import Navbar from "@/components/Navbar.vue";
 import { useModal } from "@/utils/useModal"
+import FormInput from "@/components/FormInput.vue"
 
 export default defineComponent({
   name: "App",
-  components: { Navbar },
+  components: { Navbar, FormInput },
   setup() {
     const modal = useModal()
+
+    const username = ref("username")
 
     const modalStyle = computed(() => ({
       display: modal.visible.value ? "block" : "none"
@@ -32,7 +37,8 @@ export default defineComponent({
 
     return {
       modal,
-      modalStyle
+      modalStyle,
+      username
     }
   }
 });

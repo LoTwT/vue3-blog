@@ -4,6 +4,7 @@
     <div class="control">
       <input class="input" :type="type" :id="name" @input="handleInput" :value="modelValue" />
     </div>
+    <p class="help is-danger" v-if="!error">{{ error }}</p>
   </div>
 </template>
 
@@ -24,6 +25,9 @@ export default defineComponent({
     modelValue: {
       type: String,
       required: true
+    },
+    error: {
+      type: String
     }
   },
   setup(props, ctx) {

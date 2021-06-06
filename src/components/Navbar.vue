@@ -39,7 +39,7 @@
 
     <teleport to="#modal" v-if="modal.visible">
       <!-- 插入组件 / 动态组件 -->
-      注册
+      <Register />
     </teleport>
   </nav>
 </template>
@@ -47,9 +47,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useModal } from "@/utils/useModal"
+import Register from "@/views/Register.vue"
 
 export default defineComponent({
   name: "Navbar",
+  components: { Register },
   setup() {
     return {
       modal: useModal()

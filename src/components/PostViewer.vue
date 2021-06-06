@@ -62,7 +62,7 @@ export default defineComponent({
     }
 
     const post = store.getState().posts.all[id];
-    console.log(post)
+
     return {
       post,
       gotoEdit: `/posts/${post.id}/edit`

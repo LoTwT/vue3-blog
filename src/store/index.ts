@@ -1,6 +1,6 @@
 import { reactive } from "vue"
 // import { todayPost, thisWeekPost, thisMonthPost } from "@/mock"
-import { Post } from "@/types"
+import { Post, User } from "@/types"
 import axios from "axios"
 
 interface PostState {
@@ -9,25 +9,33 @@ interface PostState {
   isLoaded: boolean,
 }
 
+interface LoginUserState {
+  ids: string[],
+  all: Record<string, User>,
+  isLoaded: boolean,
+  currentUserId?: string
+}
+
+
 interface State {
-  posts: PostState
+  posts: PostState,
+  loginUsers: LoginUserState
 }
 
 const initPostState = (): PostState => ({
-  ids: [
-    // todayPost.id.toString(),
-    // thisWeekPost.id.toString(),
-    // thisMonthPost.id.toString(),
-  ],
-  all: {
-    // [todayPost.id]: todayPost,
-    // [thisWeekPost.id]: thisWeekPost,
-    // [thisMonthPost.id]: thisMonthPost,
-  },
+  ids: [],
+  all: {},
   isLoaded: false
 })
 
-const initState = (): State => ({ posts: initPostState() })
+const initLoginUserState = (): LoginUserState => ({
+  ids: [],
+  all: {},
+  isLoaded: false,
+  currentUserId: undefined
+})
+
+const initState = (): State => ({ posts: initPostState(), loginUsers: initLoginUserState() })
 
 class Store {
   protected state: State
@@ -40,7 +48,7 @@ class Store {
     return this.state
   }
 
-  async fetchPosts() {
+  async fetchPosts(): Promise<void> {
     const res = await axios.get<Post[]>("/mockposts")
 
     for (const post of res.data) {
@@ -53,15 +61,23 @@ class Store {
     this.state.posts.isLoaded = true
   }
 
-  async createPost(post: Post) {
+  async createPost(post: Post): Promise<void> {
     const res = await axios.post<Post>("/mockposts", post)
     this.state.posts.all[res.data.id] = res.data
     this.state.posts.ids.push(res.data.id.toString())
   }
 
-  async updatePost(post: Post) {
+  async updatePost(post: Post): Promise<void> {
     const res = await axios.put<Post>("/mockposts", post)
     this.state.posts.all[res.data.id] = res.data
+  }
+
+  async createUser(user: User): Promise<void> {
+    // 创建用户
+    const res = await axios.post<User>("/mockusers", user)
+    this.state.loginUsers.all[res.data.id] = res.data
+    this.state.loginUsers.ids.push(res.data.id.toString())
+    this.state.loginUsers.currentUserId = res.data.id.toString()
   }
 }
 
